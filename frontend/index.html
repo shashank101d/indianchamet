@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>ChillChat — Anonymous Chat</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="css/style.css" />
+</head>
+<body>
+
+<!-- ═══════════════════ AUTH OVERLAY ═══════════════════ -->
+<div id="auth-overlay" class="auth-overlay">
+  <div class="auth-card">
+    <div class="auth-logo">
+      <span class="logo-bubble">💬</span>
+      <h1>ChillChat</h1>
+      <p>Talk to anyone. Be anyone.</p>
+    </div>
+
+    <!-- LOGIN -->
+    <div id="login-panel" class="auth-panel active">
+      <h2>Welcome back</h2>
+      <div class="field">
+        <label>Email</label>
+        <input type="email" id="login-email" placeholder="you@example.com" />
+      </div>
+      <div class="field">
+        <label>Password</label>
+        <input type="password" id="login-password" placeholder="••••••••" />
+      </div>
+      <div id="login-error" class="form-error hidden"></div>
+      <button class="btn-primary" onclick="login()">Sign In →</button>
+      <p class="switch-link">New here? <a href="#" onclick="showPanel('signup')">Create account</a></p>
+    </div>
+
+    <!-- SIGNUP -->
+    <div id="signup-panel" class="auth-panel">
+      <h2>Join ChillChat</h2>
+      <div class="field">
+        <label>Username</label>
+        <input type="text" id="signup-username" placeholder="cooluser42" />
+      </div>
+      <div class="field">
+        <label>Email</label>
+        <input type="email" id="signup-email" placeholder="you@example.com" />
+      </div>
+      <div class="field">
+        <label>Password</label>
+        <input type="password" id="signup-password" placeholder="Min 6 characters" />
+      </div>
+      <div id="signup-error" class="form-error hidden"></div>
+      <button class="btn-primary" onclick="signup()">Create Account →</button>
+      <p class="switch-link">Already have one? <a href="#" onclick="showPanel('login')">Sign in</a></p>
+    </div>
+  </div>
+</div>
+
+<!-- ═══════════════════ MAIN APP ═══════════════════ -->
+<div id="app" class="app hidden">
+
+  <!-- TOP NAV -->
+  <nav class="topnav">
+    <div class="nav-logo">💬 ChillChat</div>
+    <div class="nav-center">
+      <span class="nav-room-name" id="nav-room-name">Select a room</span>
+    </div>
+    <div class="nav-right">
+      <div class="coin-badge" onclick="location.href='store.html'" title="Buy more coins">
+        <span>💰</span>
+        <span id="nav-coins">0</span>
+      </div>
+      <div class="user-avatar-small" id="nav-avatar" title="Your profile"></div>
+      <span class="nav-username" id="nav-username"></span>
+      <button class="btn-icon" onclick="logout()" title="Logout">⏻</button>
+    </div>
+  </nav>
+
+  <!-- BODY -->
+  <div class="app-body">
+
+    <!-- LEFT SIDEBAR — ROOMS -->
+    <aside class="sidebar-left">
+      <div class="sidebar-section">
+        <h3 class="sidebar-heading">Rooms</h3>
+        <div id="room-list" class="room-list"></div>
+      </div>
+      <div class="sidebar-section">
+        <button class="btn-random" onclick="startRandomChat()">
+          🎲 Random Chat
+        </button>
+      </div>
+    </aside>
+
+    <!-- CHAT MAIN -->
+    <main class="chat-main">
+      <div id="empty-state" class="empty-state">
+        <div class="empty-icon">💬</div>
+        <h2>Pick a room to start chatting</h2>
+        <p>Choose a topic from the left, or try a random match!</p>
+      </div>
+
+      <div id="chat-view" class="chat-view hidden">
+        <div id="messages-container" class="messages-container"></div>
+        <div id="typing-bar" class="typing-bar hidden">
+          <span id="typing-text"></span>
+        </div>
+        <div class="input-bar">
+          <input
+            type="text"
+            id="msg-input"
+            class="msg-input"
+            placeholder="Say something..."
+            onkeydown="handleKey(event)"
+          />
+          <button class="btn-gift-open" onclick="openGiftModal()" title="Send a gift">🎁</button>
+          <button class="btn-send" onclick="sendMessage()">Send</button>
+        </div>
+      </div>
+    </main>
+
+    <!-- RIGHT SIDEBAR — USERS -->
+    <aside class="sidebar-right">
+      <h3 class="sidebar-heading">In this room</h3>
+      <div id="user-list" class="user-list">
+        <p class="no-users">No one yet…</p>
+      </div>
+    </aside>
+
+  </div>
+</div>
+
+<!-- ═══════════════════ GIFT MODAL ═══════════════════ -->
+<div id="gift-modal" class="modal-overlay hidden" onclick="closeGiftModal(event)">
+  <div class="modal-box">
+    <div class="modal-header">
+      <h3>🎁 Send a Gift</h3>
+      <button class="modal-close" onclick="closeGiftModal()">✕</button>
+    </div>
+    <p class="modal-sub" id="gift-target-label">Click a user first</p>
+    <div id="gift-grid" class="gift-grid"></div>
+  </div>
+</div>
+
+<!-- ═══════════════════ TOAST ═══════════════════ -->
+<div id="toast" class="toast hidden"></div>
+
+<script src="js/app.js"></script>
+<script src="js/chat.js"></script>
+</body>
+</html>

@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>ChillChat — Coin Store</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="css/style.css" />
+  <script src="https://js.stripe.com/v3/"></script>
+</head>
+<body class="store-page">
+
+<nav class="topnav">
+  <a class="nav-logo" href="index.html">💬 ChillChat</a>
+  <div class="nav-right">
+    <div class="coin-badge">
+      <span>💰</span>
+      <span id="nav-coins">0</span>
+    </div>
+    <span class="nav-username" id="nav-username"></span>
+    <a href="index.html" class="btn-back">← Back to chat</a>
+  </div>
+</nav>
+
+<div class="store-wrapper">
+  <div class="store-hero">
+    <h1>💰 Coin Store</h1>
+    <p>Buy coins to send gifts and show some love!</p>
+  </div>
+
+  <!-- PACKAGES -->
+  <div id="packages-grid" class="packages-grid"></div>
+
+  <!-- PAYMENT FORM (hidden until package selected) -->
+  <div id="payment-section" class="payment-section hidden">
+    <div class="payment-box">
+      <div class="payment-summary" id="payment-summary"></div>
+      <div class="field">
+        <label>Card Details</label>
+        <div id="card-element" class="stripe-card-element"></div>
+        <div id="card-errors" class="form-error"></div>
+      </div>
+      <div class="payment-actions">
+        <button id="pay-btn" class="btn-primary" onclick="submitPayment()">Pay Now 🔒</button>
+        <button class="btn-outline" onclick="cancelPayment()">Cancel</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- SUCCESS (hidden until payment confirmed) -->
+  <div id="success-section" class="success-section hidden">
+    <div class="success-box">
+      <div class="success-icon">✅</div>
+      <h2>Payment Successful!</h2>
+      <p id="success-msg">Coins added to your account.</p>
+      <a href="index.html" class="btn-primary">Back to Chat →</a>
+    </div>
+  </div>
+</div>
+
+<!-- TOAST -->
+<div id="toast" class="toast hidden"></div>
+
+<script src="js/app.js"></script>
+<script src="js/payments.js"></script>
+</body>
+</html>
